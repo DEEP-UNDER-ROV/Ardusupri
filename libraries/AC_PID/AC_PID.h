@@ -22,7 +22,16 @@
 /// @brief	Copter PID control class
 class AC_PID {
 public:
-
+    // --- Custom Setter untuk By-Pass Log SMC ---
+    void set_pid_info_custom(float target_val, float actual_val, float error_val, float p_val, float d_val, float i_val) {
+        _pid_info.target = target_val;
+        _pid_info.actual = actual_val;
+        _pid_info.error  = error_val;
+        _pid_info.P      = p_val;
+        _pid_info.D      = d_val;
+        _pid_info.I      = i_val;
+    }
+    
     struct Defaults {
         float p;
         float i;
