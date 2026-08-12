@@ -21,8 +21,8 @@ The repository follows the standard ArduPilot source tree with custom SUPRI modi
 Clone the repository together with its submodules:
 
 ```bash
-git clone --recurse-submodules https://github.com/DEEP-UNDER-ROV/Ardupilot-SUPRI.git
-cd Ardupilot-SUPRI
+git clone --recurse-submodules https://github.com/DEEP-UNDER-ROV/Ardusupri.git
+cd Ardusupri
 ```
 
 If the repository has already been cloned without submodules:
