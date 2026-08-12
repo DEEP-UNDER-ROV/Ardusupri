@@ -75,5 +75,5 @@ upstream → https://github.com/ArduPilot/ardupilot.git
 The SUPRI repository is configured as the origin remote:
 
 ```text
-origin → https://github.com/DEEP-UNDER-ROV/Ardupilot-SUPRI.git
+origin → https://github.com/DEEP-UNDER-ROV/Ardusupri.git
 ```
