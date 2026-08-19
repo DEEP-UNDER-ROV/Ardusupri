@@ -19,9 +19,9 @@ The repository follows the standard ArduPilot source tree with custom SUPRI modi
 This section describes the modifications made to the ArduSub codebase for the SUPRI ROV.
 ### 1. Thruster Configuration
 
-A custom thruster configuration was added to `libraries/AP_Motors/AP_Motors6DOF.cpp` in the `AP_Motors6DOF::setup_motors()` function. The configuration is based on the calculated thruster allocation shown in the image below.
+A custom thruster configuration was added to `libraries/AP_Motors/AP_Motors6DOF.cpp` in the `AP_Motors6DOF::setup_motors()` function. The configuration is based on the calculated thruster allocation shown in the link below.
 
-![Coretan]([path/to/image.png](https://itbdsti-my.sharepoint.com/:b:/r/personal/hilton_tnunay_itb_ac_id/Documents/Workspace/02_Education/03_Courses/2025-2026/S02/B-EL4091-TA/01_Projects/05_TA252601031_UW-Archaeology/02_TA252601031/05_Products/Propulsion%20Design.pdf?d=w4091da08cfda47149aaea5cf3e6d305f&csf=1&web=1&e=H5xXqI))
+[Propulsion Design](https://itbdsti-my.sharepoint.com/:b:/r/personal/hilton_tnunay_itb_ac_id/Documents/Workspace/02_Education/03_Courses/2025-2026/S02/B-EL4091-TA/01_Projects/05_TA252601031_UW-Archaeology/02_TA252601031/05_Products/Propulsion%20Design.pdf?d=w4091da08cfda47149aaea5cf3e6d305f&csf=1&web=1&e=H5xXqI)
 
 ### 2. SMC Implementation
 
