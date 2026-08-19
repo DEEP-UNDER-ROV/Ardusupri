@@ -17,6 +17,7 @@ The repository follows the standard ArduPilot source tree with custom SUPRI modi
 ## Code Modifications
 
 This section describes the modifications made to the ArduSub codebase for the SUPRI ROV.
+
 ### 1. Thruster Configuration
 
 A custom thruster configuration was added to `libraries/AP_Motors/AP_Motors6DOF.cpp` in the `AP_Motors6DOF::setup_motors()` function. The configuration is based on the calculated thruster allocation shown in the link below.
@@ -29,9 +30,7 @@ A Sliding Mode Controller (SMC) was implemented to replace the default PID rate 
 
 The controller is implemented in the `AC_AttitudeControl_Sub::rate_controller_run()` function. In the current implementation, the default PID controller is located at line 594, while the SMC implementation is located at line 608.
 
-Several SMC-related declarations used by the controller are defined in:
-
-`libraries/AC_AttitudeControl/AC_AttitudeControl_Sub.h`
+Several SMC-related declarations used by the controller are defined in `libraries/AC_AttitudeControl/AC_AttitudeControl_Sub.h`.
 
 The SMC is executed within the ArduSub rate-control loop and replaces the default PID controller for attitude rate control.
 
