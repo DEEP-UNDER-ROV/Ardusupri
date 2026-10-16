@@ -123,7 +123,7 @@ public:
     friend class ModeCircle;
     friend class ModeSurface;
     friend class ModeMotordetect;
-
+    friend class ModeAutoTune;
     Sub(void);
 
 protected:
@@ -600,6 +600,7 @@ private:
     ModeSurface mode_surface;
     ModeMotordetect mode_motordetect;
     ModeSurftrak mode_surftrak;
+    ModeAutoTune mode_autotune;
 
     // Auto
     AutoSubMode auto_mode;   // controls which auto controller is run

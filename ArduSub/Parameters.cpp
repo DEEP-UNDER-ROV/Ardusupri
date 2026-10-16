@@ -750,6 +750,41 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
     // @Path: ../ArduSub/actuators.cpp
     AP_SUBGROUPINFO(actuators, "ACTUATOR", 23, ParametersG2, Actuators),
 
+    // --- TAMBAHKAN DI SINI (SEBELUM AP_GROUPEND) ---
+    // @Param: ATUN_AXIS
+    // @DisplayName: AutoTune Axis
+    // @Description: Sumbu yang akan di-tune (0:Roll, 1:Pitch, 2:Yaw)
+    // @Values: 0:Roll,1:Pitch,2:Yaw
+    // @User: Standard
+    AP_GROUPINFO("ATUN_AXIS", 24, ParametersG2, atun_axis, 0),
+
+    // @Param: ATUN_KP_INIT
+    // @DisplayName: AutoTune Initial Kp
+    // @Description: Nilai Kp awal saat memulai pencarian biseksi
+    // @Range: 0.01 10.0
+    // @User: Standard
+    AP_GROUPINFO("ATUN_KP_INIT", 25, ParametersG2, atun_kp_init, 1.0f),
+
+    // @Param: ATUN_STEP
+    // @DisplayName: AutoTune Initial Step
+    // @Description: Ukuran langkah kenaikan Kp sebelum mencapai batas osilasi
+    // @Range: 0.01 5.0
+    // @User: Standard
+    AP_GROUPINFO("ATUN_STEP", 26, ParametersG2, atun_step, 1.0f),
+
+    // @Param: ATUN_DBAND
+    // @DisplayName: AutoTune Gyro Deadband
+    // @Description: Threshold kecepatan sudut (rad/s) untuk mendeteksi osilasi
+    // @Range: 0.005 1.0
+    // @User: Standard
+    AP_GROUPINFO("ATUN_DBAND", 27, ParametersG2, atun_deadband, 0.05f),
+
+    // @Param: ATUN_TMOUT
+    // @DisplayName: AutoTune Step Timeout
+    // @Description: Durasi observasi per step Kp dalam milidetik
+    // @Range: 1000 15000
+    // @User: Standard
+    AP_GROUPINFO("ATUN_TMOUT", 28, ParametersG2, atun_timeout, 4000),
     AP_GROUPEND
 };
 

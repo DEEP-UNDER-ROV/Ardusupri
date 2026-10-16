@@ -183,28 +183,46 @@ void AP_Motors6DOF::setup_motors(motor_frame_class frame_class, motor_frame_type
         // --- 1. HORIZONTAL THRUSTERS (Surge & yaw) ---
         // Motor 1: Posisi KIRI, mendatar lurus ke depan
         // Dorong maju (+1 Fwd) bikin ROV belok kanan (+1 Yaw)
-        add_motor_raw_6dof(AP_MOTORS_MOT_1,  0,  0,  1.0f,  0,  1.0f,  0, 1);
-        
+        add_motor_raw_6dof(AP_MOTORS_MOT_1, 0, 0, 1.0f, 0, 1.0f, 0, 1);
+
+
         // Motor 2: Posisi KANAN, mendatar lurus ke depan
+
         // Dorong maju (+1 Fwd) bikin ROV belok kiri (-1 Yaw)
-        add_motor_raw_6dof(AP_MOTORS_MOT_2,  0,  0, -1.0f,  0,  1.0f,  0, 2);
+
+        add_motor_raw_6dof(AP_MOTORS_MOT_2, 0, 0, -1.0f, 0, 1.0f, 0, 2);
+
+
 
         // --- 2. VECTORED 3D THRUSTERS (Heave, Sway, Roll, Pitch) ---
+
         // Motor 3: Depan Kiri
-        // Posisi dorong: ROV ke Atas (+1 Thr) dan ke Kanan (+1 Lat) -> Bikin Roll Kanan (+1), Pitch Naik (+1)
-        add_motor_raw_6dof(AP_MOTORS_MOT_3,  1.0f,  1.0f,  0,  1.0f,  0,  -1.0f, 3);
-        
+
+        // Koreksi NED: Heave Naik (-1), Roll Kiri untuk meratakan (-1), Pitch Depan untuk mendongak (-1), Sway Kanan (1)
+
+        add_motor_raw_6dof(AP_MOTORS_MOT_3, -1.0f, -1.0f, 0, -1.0f, 0, 1.0f, 3);
+
+
         // Motor 4: Depan Kanan
-        // Posisi dorong: ROV ke Atas (+1 Thr) dan ke Kiri (-1 Lat) -> Bikin Roll Kiri (-1), Pitch Naik (+1)
-        add_motor_raw_6dof(AP_MOTORS_MOT_4, -1.0f,  1.0f,  0,  1.0f,  0, 1.0f, 4);
-        
+
+        // Koreksi NED: Heave Naik (-1), Roll Kanan untuk meratakan (1), Pitch Depan untuk mendongak (-1), Sway Kiri (-1)
+
+        add_motor_raw_6dof(AP_MOTORS_MOT_4, 1.0f, -1.0f, 0, -1.0f, 0, -1.0f, 4);
+
+
         // Motor 5: Belakang Kiri
-        // Posisi dorong: ROV ke Atas (+1 Thr) dan ke Kiri (-1 Lat) -> Bikin Roll Kanan (+1), Pitch Turun (-1)
-        add_motor_raw_6dof(AP_MOTORS_MOT_5,  1.0f, -1.0f,  0,  1.0f,  0, 1.0f, 5);
-        
+
+        // Koreksi NED: Heave Naik (-1), Roll Kiri untuk meratakan (-1), Pitch Belakang untuk menunduk (1), Sway Kiri (-1)
+
+        add_motor_raw_6dof(AP_MOTORS_MOT_5, -1.0f, 1.0f, 0, -1.0f, 0, -1.0f, 5);
+
+
         // Motor 6: Belakang Kanan
-        // Posisi dorong: ROV ke Atas (+1 Thr) dan ke Kanan (+1 Lat) -> Bikin Roll Kiri (-1), Pitch Turun (-1)
-        add_motor_raw_6dof(AP_MOTORS_MOT_6, -1.0f, -1.0f,  0,  1.0f,  0,  -1.0f, 6);
+
+        // Koreksi NED: Heave Naik (-1), Roll Kanan untuk meratakan (1), Pitch Belakang untuk menunduk (1), Sway Kanan (1)
+
+        add_motor_raw_6dof(AP_MOTORS_MOT_6, 1.0f, 1.0f, 0, -1.0f, 0, 1.0f, 6);
+
         break;
     
     case SUB_FRAME_SIMPLEROV_3:

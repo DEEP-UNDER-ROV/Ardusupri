@@ -390,6 +390,13 @@ public:
     AP_Float backup_origin_alt;
     Actuators actuators;
 
+    // Parameter kustom untuk ModeAutoTune
+    AP_Int8  atun_axis;
+    AP_Float atun_kp_init;
+    AP_Float atun_step;
+    AP_Float atun_deadband;
+    AP_Int16 atun_timeout;
+
 };
 
 extern const AP_Param::Info        var_info[];

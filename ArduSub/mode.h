@@ -50,7 +50,8 @@ public:
         POSHOLD =      16,  // automatic position hold with manual override, with automatic throttle
         MANUAL =       19,  // Pass-through input with no stabilization
         MOTOR_DETECT = 20,  // Automatically detect motors orientation
-        SURFTRAK =     21   // Track distance above seafloor (hold range)
+        SURFTRAK =     21,   // Track distance above seafloor (hold range)
+        AUTOTUNE = 22,  // Automatically tune PID gains
     };
 
     // constructor
@@ -461,6 +462,50 @@ protected:
     const char *name4() const override { return "SURF"; }
 };
 
+class ModeAutoTune : public Mode {
+public:
+    using Mode::Mode;
+
+    bool init(bool ignore_checks) override;
+    void run() override;
+
+    bool requires_GPS() const override { return false; }
+    bool has_manual_throttle() const override { return false; }
+    bool allows_arming(bool from_gcs) const override { return false; } // Set true if you want to arm directly in AUTOTUNE
+    bool is_autopilot() const override { return true; }
+
+protected:
+    const char *name() const override { return "AUTOTUNE"; }
+    const char *name4() const override { return "ATUN"; }
+    AC_PID& _get_active_rate_pid();
+    const char* _get_axis_name() const;
+    // Variabel internal untuk State Machine Biseksi (Terjemahan dari Lua)
+    enum AutoTuneState {
+        STATE_IDLE,
+        STATE_INIT,
+        STATE_TUNE_RATE_P,
+        STATE_CALC_ZIG_NIC,
+        STATE_DONE
+    } _atune_state = STATE_IDLE;
+
+    uint32_t _tune_start_time_ms;
+    uint32_t _last_cross_time_ms;
+    uint8_t _cross_count;
+    bool _is_positive_cycle;
+    
+    float _p_test_val;
+    float _step_val;
+    float _lower_bound;
+    float _upper_bound;
+    bool _found_ceiling;
+    
+    float _ku;
+    float _tu;
+    
+    // Fungsi pembantu
+    void _update_measurement(float rate_val, uint32_t now);
+    void _calculate_and_save_pid();
+};
 
 class ModeMotordetect : public Mode
 {
