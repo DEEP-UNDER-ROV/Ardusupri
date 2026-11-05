@@ -77,6 +77,33 @@ const AP_Param::GroupInfo AP_LeakDetector::var_info[] = {
     AP_GROUPINFO("3_TYPE", 9, AP_LeakDetector, _type[2], DISABLED),
 #endif
 
+    // @Param: 1_THRESH
+    // @DisplayName: Leak detector 1 analog threshold
+    // @Description: Voltage above which an analog leak detector 1 reads high. Compared against LEAK1_LOGIC to decide whether a leak is present. Only used when LEAK1_TYPE is analog.
+    // @Units: V
+    // @Range: 0 5
+    // @Increment: 0.01
+    // @User: Advanced
+    AP_GROUPINFO("1_THRESH", 10, AP_LeakDetector, _analog_thresh[0], 2.0f),
+
+    // @Param: 2_THRESH
+    // @DisplayName: Leak detector 2 analog threshold
+    // @Description: Voltage above which an analog leak detector 2 reads high. Compared against LEAK2_LOGIC to decide whether a leak is present. Only used when LEAK2_TYPE is analog.
+    // @Units: V
+    // @Range: 0 5
+    // @Increment: 0.01
+    // @User: Advanced
+    AP_GROUPINFO("2_THRESH", 11, AP_LeakDetector, _analog_thresh[1], 2.0f),
+
+    // @Param: 3_THRESH
+    // @DisplayName: Leak detector 3 analog threshold
+    // @Description: Voltage above which an analog leak detector 3 reads high. Compared against LEAK3_LOGIC to decide whether a leak is present. Only used when LEAK3_TYPE is analog.
+    // @Units: V
+    // @Range: 0 5
+    // @Increment: 0.01
+    // @User: Advanced
+    AP_GROUPINFO("3_THRESH", 12, AP_LeakDetector, _analog_thresh[2], 2.0f),
+
     AP_GROUPEND
 };
 
