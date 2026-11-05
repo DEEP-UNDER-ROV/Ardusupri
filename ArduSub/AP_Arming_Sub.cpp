@@ -167,6 +167,14 @@ bool AP_Arming_Sub::disarm(const AP_Arming::Method method, bool do_disarm_checks
         }
     }
 
+#if AUTOTUNE_ENABLED == ENABLED
+    if (sub.flightmode == &sub.mode_autotune) {
+        sub.mode_autotune.save_tuning_gains();
+    } else {
+        sub.mode_autotune.reset();
+    }
+#endif
+
     // send disarm command to motors
     sub.motors.armed(false);
 

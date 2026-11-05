@@ -47,6 +47,7 @@ public:
         GUIDED =        4,  // fully automatic fly to coordinate or fly at velocity/direction using GCS immediate commands
         CIRCLE =        7,  // automatic circular flight with automatic throttle
         SURFACE =       9,  // automatically return to surface, pilot maintains horizontal control
+        AUTOTUNE =     15,  // automatically tune attitude controller gains
         POSHOLD =      16,  // automatic position hold with manual override, with automatic throttle
         MANUAL =       19,  // Pass-through input with no stabilization
         MOTOR_DETECT = 20,  // Automatically detect motors orientation
@@ -482,3 +483,47 @@ protected:
     const char *name() const override { return "MOTORDETECT"; }
     const char *name4() const override { return "DETE"; }
 };
+
+#if AUTOTUNE_ENABLED == ENABLED
+class AutoTune : public AC_AutoTune_Multi
+{
+public:
+    bool init() override;
+    void run() override;
+
+protected:
+    bool position_ok() override { return false; }
+    float get_pilot_desired_climb_rate_cms(void) const override;
+    void get_pilot_desired_rp_yrate_cd(float &roll_cd, float &pitch_cd, float &yaw_rate_cds) override;
+    void init_z_limits() override;
+#if HAL_LOGGING_ENABLED
+    void log_pids() override;
+#endif
+};
+
+class ModeAutoTune : public Mode
+{
+    friend class ParametersG2;
+
+public:
+    using Mode::Mode;
+
+    bool init(bool ignore_checks) override;
+    void run() override;
+    void exit();
+
+    bool requires_GPS() const override { return false; }
+    bool has_manual_throttle() const override { return false; }
+    bool allows_arming(bool from_gcs) const override { return false; }
+    bool is_autopilot() const override { return false; }
+
+    void save_tuning_gains();
+    void reset();
+
+    AutoTune autotune;
+
+protected:
+    const char *name() const override { return "AUTOTUNE"; }
+    const char *name4() const override { return "ATUN"; }
+};
+#endif

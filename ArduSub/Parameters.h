@@ -390,6 +390,9 @@ public:
     AP_Float backup_origin_alt;
     Actuators actuators;
 
+#if AUTOTUNE_ENABLED == ENABLED
+    void *autotune_ptr;
+#endif
 };
 
 extern const AP_Param::Info        var_info[];

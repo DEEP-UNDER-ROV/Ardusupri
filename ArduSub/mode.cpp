@@ -59,6 +59,11 @@ Mode *Sub::mode_from_mode_num(const Mode::Number mode)
     case Mode::Number::MOTOR_DETECT:
         ret = &mode_motordetect;
         break;
+#if AUTOTUNE_ENABLED == ENABLED
+    case Mode::Number::AUTOTUNE:
+        ret = &mode_autotune;
+        break;
+#endif
     default:
         break;
     }
@@ -160,6 +165,11 @@ void Sub::update_flight_mode()
 
 // exit_mode - high level call to organise cleanup as a flight mode is exited
 void Sub::exit_mode(Mode *&old_flightmode, Mode *&new_flightmode){
+#if AUTOTUNE_ENABLED == ENABLED
+    if (old_flightmode == &mode_autotune) {
+        mode_autotune.exit();
+    }
+#endif
 #if HAL_MOUNT_ENABLED
         camera_mount.set_mode_to_default();
 #endif  // HAL_MOUNT_ENABLED

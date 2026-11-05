@@ -30,6 +30,10 @@
 // Circle Nav parameters
 //
 
+#ifndef AUTOTUNE_ENABLED
+# define AUTOTUNE_ENABLED ENABLED
+#endif
+
 #ifndef CIRCLE_NAV_ENABLED
 # define CIRCLE_NAV_ENABLED ENABLED
 #endif

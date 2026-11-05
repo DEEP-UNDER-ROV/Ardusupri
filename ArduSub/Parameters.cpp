@@ -750,6 +750,12 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
     // @Path: ../ArduSub/actuators.cpp
     AP_SUBGROUPINFO(actuators, "ACTUATOR", 23, ParametersG2, Actuators),
 
+#if AUTOTUNE_ENABLED == ENABLED
+    // @Group: AUTOTUNE_
+    // @Path: ../libraries/AC_AutoTune/AC_AutoTune_Multi.cpp
+    AP_SUBGROUPPTR(autotune_ptr, "AUTOTUNE_", 24, ParametersG2, AutoTune),
+#endif
+
     AP_GROUPEND
 };
 
@@ -757,6 +763,9 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
   constructor for g2 object
  */
 ParametersG2::ParametersG2()
+#if AUTOTUNE_ENABLED == ENABLED
+    : autotune_ptr(&sub.mode_autotune.autotune)
+#endif
 {
     AP_Param::setup_object_defaults(this, var_info);
 }
