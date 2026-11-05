@@ -27,6 +27,9 @@ public:
     // Return current status
     bool get_status(void) const { return _status; }
 
+    // bit i set: LEAK(i+1) detected within cooldown, bit 7: external (MAVLink) detect
+    uint8_t get_leak_mask(void) const { return _leak_mask; }
+
     // Set status externally, ie via mavlink message from subsystems
     void set_detect(void);
 
@@ -46,6 +49,9 @@ private:
 
     bool _status; // Current status, true if leak detected, false if all sensors dry
     uint32_t _last_detect_ms;
+    uint32_t _last_detect_instance_ms[LEAKDETECTOR_MAX_INSTANCES];
+    uint32_t _last_detect_external_ms;
+    uint8_t _leak_mask;
 
     enum _signal_types {
         DISABLED=-1,

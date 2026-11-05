@@ -274,6 +274,7 @@ void Sub::failsafe_leak_check()
         }
         AP_Notify::flags.leak_detected = false;
         failsafe.leak = false;
+        failsafe.last_leak_mask = 0;
         return;
     }
 
@@ -281,11 +282,23 @@ void Sub::failsafe_leak_check()
 
     uint32_t tnow = AP_HAL::millis();
 
-    // We have a leak
-    // Always send a warning every 20 seconds
-    if (tnow > failsafe.last_leak_warn_ms + 20000) {
+    const uint8_t mask = leak_detector.get_leak_mask();
+    const bool new_sensor = (mask & ~failsafe.last_leak_mask) != 0;
+    failsafe.last_leak_mask = mask;
+
+    if (new_sensor || tnow > failsafe.last_leak_warn_ms + 20000) {
         failsafe.last_leak_warn_ms = tnow;
-        gcs().send_text(MAV_SEVERITY_CRITICAL, "Leak Detected");
+        char names[40] {};
+        uint8_t len = 0;
+        for (uint8_t i = 0; i < LEAKDETECTOR_MAX_INSTANCES; i++) {
+            if (mask & (1U << i)) {
+                len += hal.util->snprintf(&names[len], sizeof(names) - len, " LEAK%u", unsigned(i + 1));
+            }
+        }
+        if (mask & (1U << 7)) {
+            hal.util->snprintf(&names[len], sizeof(names) - len, " EXT");
+        }
+        gcs().send_text(MAV_SEVERITY_CRITICAL, "Leak Detected:%s", names);
     }
 
     // Do nothing if we have already triggered the failsafe action, or if the motors are disarmed

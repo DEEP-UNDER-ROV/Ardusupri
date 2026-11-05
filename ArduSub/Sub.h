@@ -227,6 +227,7 @@ private:
     // Failsafe
     struct {
         uint32_t last_leak_warn_ms;      // last time a leak warning was sent to gcs
+        uint8_t last_leak_mask;
         uint32_t last_gcs_warn_ms;
         uint32_t last_pilot_input_ms; // last time we received pilot input in the form of MANUAL_CONTROL or RC_CHANNELS_OVERRIDE messages
         uint32_t terrain_first_failure_ms;  // the first time terrain data access failed - used to calculate the duration of the failure

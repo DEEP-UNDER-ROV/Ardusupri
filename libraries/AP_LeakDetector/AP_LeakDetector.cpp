@@ -126,14 +126,25 @@ bool AP_LeakDetector::update()
 {
     uint32_t tnow = AP_HAL::millis();
 
+    uint8_t mask = 0;
     for (int i = 0; i < LEAKDETECTOR_MAX_INSTANCES; i++) {
         if (_drivers[i] != NULL) {
             _drivers[i]->read();
             if (_state[i].status) {
                 _last_detect_ms = tnow;
+                _last_detect_instance_ms[i] = tnow;
+            }
+            if (_last_detect_instance_ms[i] != 0 &&
+                tnow < _last_detect_instance_ms[i] + LEAKDETECTOR_COOLDOWN_MS) {
+                mask |= (1U << i);
             }
         }
     }
+    if (_last_detect_external_ms != 0 &&
+        tnow < _last_detect_external_ms + LEAKDETECTOR_COOLDOWN_MS) {
+        mask |= (1U << 7);
+    }
+    _leak_mask = mask;
 
     _status = tnow < _last_detect_ms + LEAKDETECTOR_COOLDOWN_MS;
 
@@ -143,4 +154,5 @@ bool AP_LeakDetector::update()
 void AP_LeakDetector::set_detect()
 {
     _last_detect_ms = AP_HAL::millis();
+    _last_detect_external_ms = _last_detect_ms;
 }
